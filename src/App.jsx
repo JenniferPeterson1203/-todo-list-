@@ -23,7 +23,7 @@ function addTodo(todoTitle){
     <div>
 
       <h1>Todo List</h1>
-      <TodoForm addTodo={addTodo}/>
+      <TodoForm onAddTodo={addTodo}/>
       <TodoList todoList={todoList}/>
  
     </div>

@@ -1,6 +1,6 @@
 import { useRef } from "react"
 
-const TodoForm = ({addTodo}) => {
+const TodoForm = ({onAddTodo}) => {
   // keeps refernce to the input so we focus on it later
   const inputRef = useRef();
 
@@ -12,7 +12,7 @@ const TodoForm = ({addTodo}) => {
 
     //only add if the input is NOT empty
     if (todoTitle){
-      addTodo(todoTitle); //send the data to the parent component
+      onAddTodo(todoTitle); //send the data to the parent component
 
       event.target.reset(); // this clears the text input field
 
