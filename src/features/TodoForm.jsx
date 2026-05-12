@@ -4,7 +4,7 @@ import TextInputWithLabel from "../shared/TextInputWithLabel";
 
 const TodoForm = ({onAddTodo}) => {
   // keeps refernce to the input so we focus on it later
-  const inputRef = useRef();
+  const ref = useRef();
 
   //this stores what the user is typing
   const [workingTodoTitle, setWorkingTodoTitle] = useState("")
@@ -38,7 +38,7 @@ return (
   labelText="Todo"
   value={workingTodoTitle}
   onChange={(event) => setWorkingTodoTitle(event.target.value)}
-  inputRef={inputRef}
+  ref={ref}
 />
 
     <button type="submit"

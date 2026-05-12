@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from "react";
 import TextInputWithLabel from "../../shared/TextInputWithLabel";
+import { isValidTodoTitle } from '../../utils/todoValidation';
 
 const TodoListItem = ({todo, onCompleteTodo, onUpdateTodo}) => {
   // Controls whether user is editing
@@ -68,7 +69,9 @@ function handleUpdate(event) {
         >
         Cancel
       </button>
-      <button type="submit">
+      <button type="submit"
+      disabled={!isValidTodoTitle(workingTitle)}
+      >
   Update
 </button>
     </>
@@ -78,17 +81,22 @@ function handleUpdate(event) {
   // FALSE -> show normal todo
   <>
       {/* checkbox */}
+      
+<label htmlFor="">
+
       <input
         type="checkbox"
         checked={todo.isCompleted}
         onChange={() => onCompleteTodo(todo.id)}
         />
+        </label>
 
       {/* clicking title enters edit mode */}
       <span onClick={() => setIsEditing(true)}>
         {todo.title}
       </span>
     </>
+    
   )}
 
   </form>
