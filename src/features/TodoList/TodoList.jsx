@@ -1,8 +1,11 @@
 import TodoListItem from "./TodoListItem";
 
-const TodoList = ({ todoList, onCompleteTodo }) => {
+const TodoList = ({ todoList, onCompleteTodo, onUpdateTodo }) => {
   //Create a filtered version of todos
   const filteredTodoList = todoList.filter((todo) => !todo.isCompleted);
+
+
+  
 
   return (
     <>
@@ -18,6 +21,8 @@ const TodoList = ({ todoList, onCompleteTodo }) => {
               key={todo.id}
               todo={todo}
               onCompleteTodo={onCompleteTodo}
+              onUpdateTodo={onUpdateTodo}
+
             />
           ))}
         </ul>

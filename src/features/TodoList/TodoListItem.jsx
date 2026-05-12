@@ -1,21 +1,98 @@
 import React from 'react'
+import { useState } from "react";
+import TextInputWithLabel from "../../shared/TextInputWithLabel";
+
+const TodoListItem = ({todo, onCompleteTodo, onUpdateTodo}) => {
+  // Controls whether user is editing
+const [isEditing, setIsEditing] = useState(false);
+
+// Stores temporary edited title
+const [workingTitle, setWorkingTitle] = useState(todo.title);
 
 
-const TodoListItem = ({todo, onCompleteTodo}) => {
+// Updates text while typing
+function handleEdit(event) {
+  setWorkingTitle(event.target.value);
+}
+
+// Cancels editing
+function handleCancel() {
+  setWorkingTitle(todo.title);
+  setIsEditing(false);
+}
+
+
+function handleUpdate(event) {
+  // Stop form refresh
+  event.preventDefault();
+
+  // Exit if not editing
+  if (!isEditing) {
+    return;
+  }
+
+  // Update todo
+  onUpdateTodo({
+    ...todo,
+    title: workingTitle,
+  });
+
+  // Exit edit mode
+  setIsEditing(false);
+}
 
   return (
-    <li>
-      {/* This checkbox here will control if the todo was completed */}
-      <input type="checkbox" 
-      //checked = true if it is completed
-      checked = {todo.isCompleted}
+<li>
 
-      //when clicked, mark todo completed
-      onChange = {()=> onCompleteTodo(todo.id)}
-      />
-      {/* Here is where we are actually showing the todo */}
-      {todo.title}
-      </li>
+  {/* This ternary checks if we are editing */}
+  <form onSubmit={handleUpdate}>
+
+  {isEditing ? (
+    
+    // TRUE -> show edit input
+    <>
+      <TextInputWithLabel
+        elementId={`todo-${todo.id}`}
+        labelText="Edit Todo"
+        value={workingTitle}
+        
+        // updates state while typing
+        onChange={handleEdit}
+        />
+
+      <button
+        type="button"
+        
+        // exits edit mode
+        onClick={handleCancel}
+        >
+        Cancel
+      </button>
+      <button type="submit">
+  Update
+</button>
+    </>
+
+) : (
+  
+  // FALSE -> show normal todo
+  <>
+      {/* checkbox */}
+      <input
+        type="checkbox"
+        checked={todo.isCompleted}
+        onChange={() => onCompleteTodo(todo.id)}
+        />
+
+      {/* clicking title enters edit mode */}
+      <span onClick={() => setIsEditing(true)}>
+        {todo.title}
+      </span>
+    </>
+  )}
+
+  </form>
+</li>
   )
 }
 

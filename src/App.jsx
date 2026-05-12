@@ -35,11 +35,34 @@ function App() {
     );
   };
 
+
+
+
+
+  function updateTodo(editedTodo) {
+  // Create updated array
+  const updatedTodos = todoList.map((todo) => {
+    // Replace matching todo
+    if (todo.id === editedTodo.id) {
+      return {
+        ...editedTodo,
+      };
+    }
+
+    // Keep original todo
+    return todo;
+  });
+
+  // Save updated todos
+  setTodoList(updatedTodos);
+}
+
+
   return (
     <div>
       <h1>Todo List</h1>
       <TodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onCompleteTodo={completeTodo} />{" "}
+      <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>{" "}
       {/* pass the function over to todolist as a prop */}
     </div>
   );

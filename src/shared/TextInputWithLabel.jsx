@@ -11,13 +11,14 @@ function TextInputWithLabel({
       <label htmlFor={elementId}>{labelText}</label>
 
       {/* Reusable text input */}
-      <input
-        type="text"
-        id={elementId}
-        ref={inputRef}
-        value={value}
-        onChange={onChange}
-      />
+<input
+  type="text"
+  id={elementId}
+  name={elementId}
+  ref={inputRef}
+  value={value}
+  onChange={onChange}
+/>
     </>
   );
 }
