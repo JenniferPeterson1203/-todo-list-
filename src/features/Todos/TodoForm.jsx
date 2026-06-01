@@ -1,6 +1,6 @@
 import { useRef, useState } from "react"
-import { isValidTodoTitle } from "../utils/todoValidation";
-import TextInputWithLabel from "../shared/TextInputWithLabel";
+import { isValidTodoTitle } from "../../utils/todoValidation";
+import TextInputWithLabel from "../../shared/TextInputWithLabel";
 
 const TodoForm = ({onAddTodo}) => {
   // keeps refernce to the input so we focus on it later
