@@ -1,69 +1,30 @@
-import "./App.css";
-import TodoList from "./features/TodoList/TodoList.jsx";
-import TodoForm from "./features/TodoForm.jsx";
-import { useState } from "react";
+// src/App.jsx
+import { useState } from 'react';
+import Header from './shared/Header';
+import TodosPage from './features/Todos/TodosPage';
+import Logon from './features/Todos/Logon'; // Points to its current home in your file tree
+import './App.css';
 
 function App() {
-  const [todoList, setTodoList] = useState([]); // start with an empty array so that user adds todos
-
-  function addTodo(todoTitle) {
-    // create a new to do object
-    const newTodo = {
-      id: Date.now(), // this is a built in fx to get a unique id based on the timestamp
-      title: todoTitle,
-
-      //every todo should start as NOT completed
-      isCompleted: false,
-    };
-
-    // update the state using the previous state safely
-    setTodoList((previous) => [newTodo, ...previous]);
-  }
-
-  const completeTodo = (id) => {
-    setTodoList((previous) =>
-      previous.map((todo) => {
-        //if this is the todo that we clicked
-        if (todo.id === id) {
-          return {
-            ...todo, //copy the old todo
-            isCompleted: true, // mark the todo as complete
-          };
-        }
-        return todo;
-      }),
-    );
-  };
-
-
-
-
-
-  function updateTodo(editedTodo) {
-  // Create updated array
-  const updatedTodos = todoList.map((todo) => {
-    // Replace matching todo
-    if (todo.id === editedTodo.id) {
-      return {
-        ...editedTodo,
-      };
-    }
-
-    // Keep original todo
-    return todo;
-  });
-
-  // Save updated todos
-  setTodoList(updatedTodos);
-}
-
+  // Define our top-level authentication states
+  const [email, setEmail] = useState('');
+  const [token, setToken] = useState('');
 
   return (
     <div>
-      <h1>Todo List</h1>
-      <TodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onCompleteTodo={completeTodo} onUpdateTodo={updateTodo}/>{" "}
-      {/* pass the function over to todolist as a prop */}
+      {/* 1. Header always renders at the top of the app */}
+      <Header />
+      
+      {/* 2. Conditional Rendering block */}
+      {token ? (
+        // If a secure token exists, display the interactive todos workspace
+        // We pass the token down as a prop so TodosPage can authorize database API requests
+        <TodosPage token={token} />
+      ) : (
+        // If no token exists, lock the view down and display the login form
+        // We pass the state setter functions so Logon can lift up the token on success
+        <Logon onSetEmail={setEmail} onSetToken={setToken} />
+      )}
     </div>
   );
 }
